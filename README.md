@@ -227,9 +227,6 @@ This repository extends that framework into a multi-asset setting, incorporating
 
 The extension addresses a key limitation of the original study — its single-asset scope — and evaluates whether the conditional structure generalises across markets.
 
-Full academic write-up:
-→ `docs/assignment_2.pdf`
-
 Concise research note:
 → `docs/research_note.md`
 
