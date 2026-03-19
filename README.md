@@ -33,19 +33,21 @@ Four strategies are evaluated:
 ---
 
 ## Key Results
+> **Key Insight:** Volatility conditioning transforms momentum from a fragile anomaly into a robust, drawdown-controlled strategy, with strongest performance during crisis regimes.
+
+### Visual Summary
+
+<p align="center">
+  <img src="outputs/figures/equity_curves/equity_curves_2bps.png" width="600" />
+</p>
+
+<p align="center">
+  <img src="outputs/figures/crisis_heatmaps/crisis_heatmap_maxdd_2bps.png" width="600" />
+</p>
 
 ### 1. Equity Curve Behaviour
 
-- At **0 bps and 2 bps**, **VC_CONTRARIAN clearly dominates**, delivering the strongest terminal performance.
-- **VC_FLAT and BH track closely**, with BH eventually outperforming due to a strong 2025 rally.
-- At **10 bps (conservative cost assumption)**:
-  - **Buy & Hold wins**
-  - **VC_CONTRARIAN remains competitive (2nd)**
-  - **VC_FLAT ranks 3rd**
-- **Unconditional TSMOM is consistently underwhelming**, showing weak growth and no persistent edge.
-
-**Interpretation:**  
-Volatility conditioning materially improves momentum, but **transaction costs are a binding constraint**, particularly for higher-turnover strategies.
+At low transaction cost levels (0–2 bps), the VC_CONTRARIAN strategy delivers the strongest terminal performance, clearly outperforming all other specifications. VC_FLAT and Buy & Hold track closely over much of the sample, although Buy & Hold ultimately benefits from the strong 2025 rally and finishes ahead. Under a more conservative 10 bps assumption, Buy & Hold becomes the dominant strategy, with VC_CONTRARIAN remaining competitive and VC_FLAT ranking third. In contrast, unconditional TSMOM shows persistently weak performance across all cost assumptions, with no clear evidence of sustained growth.
 
 ---
 
@@ -53,35 +55,11 @@ Volatility conditioning materially improves momentum, but **transaction costs ar
 
 #### Cumulative Returns
 
-- **Global Financial Crisis (2008–2009):**
-  - **VC_FLAT: +28.9%**
-  - **VC_CONTRARIAN: +36.4%**
-  - Strong outperformance vs BH and TSMOM
-
-- **COVID (2020):**
-  - Contrarian performs best (**+11.7%**)
-  - VC strategies remain resilient
-
-- **2022 Inflation Bear:**
-  - All strategies struggle
-  - VC strategies outperform BH meaningfully
+During the Global Financial Crisis, volatility-conditioned strategies significantly outperform, with VC_FLAT delivering +28.9% and VC_CONTRARIAN achieving +36.4%, both materially exceeding Buy & Hold and TSMOM. During the COVID shock, the contrarian specification performs best (+11.7%), capturing rebound dynamics effectively, while the flat strategy remains highly defensive. In the 2022 inflation-driven bear market, all strategies experience losses, but volatility-conditioned approaches outperform Buy & Hold, demonstrating improved resilience under adverse conditions.
 
 #### Max Drawdown
 
-- **VC_FLAT (best risk control):**
-  - GFC: **-7.4%**
-  - 2022: **-5.5%**
-  - COVID: **~0%**
-
-- Other strategies:
-  - COVID: **-21% to -30%**
-  - GFC: **-44% to -49%**
-  - 2022: **-18% to -31%**
-
-- **VC_CONTRARIAN is second-best** in drawdown control
-
-**Interpretation:**  
-Volatility conditioning is not only return-enhancing — it is **structurally risk-reducing**, particularly in crisis regimes.
+VC_FLAT provides the strongest drawdown control across all crisis periods, with a maximum drawdown of -7.4% during the GFC, -5.5% in 2022, and effectively zero during COVID. In contrast, other strategies experience substantially larger drawdowns, ranging from approximately -21% to -30% during COVID, -44% to -49% during the GFC, and -18% to -31% in 2022. VC_CONTRARIAN offers the second-best drawdown profile, improving on unconditional strategies while maintaining higher return potential than VC_FLAT.
 
 ---
 
@@ -123,27 +101,13 @@ The signal is **robust across time**, not just an in-sample artefact.
 
 ## Economic Intuition
 
-Momentum performance deteriorates in:
-- High-volatility environments  
-- Reversal regimes  
-- Crisis-driven dislocations  
-
-Volatility conditioning allows the strategy to:
-- Scale down risk during unstable periods  
-- Switch behaviour (trend vs contrarian) depending on regime  
-- Avoid large drawdowns typical of unconditional momentum  
+Momentum performance deteriorates in high-volatility environments, particularly during reversal regimes and crisis-driven dislocations. In such states, previously persistent trends can break down rapidly, leading to sharp losses for unconditional momentum strategies. Volatility conditioning addresses this by dynamically adjusting exposure: reducing risk during unstable periods and switching behaviour between trend-following and contrarian positioning depending on the prevailing regime. This allows the strategy to avoid large drawdowns while maintaining participation in favourable market conditions.
 
 ---
 
 ## Portfolio Construction
 
-- Multi-asset universe:
-  - Equities, bonds, commodities, FX  
-- Static cross-asset weights  
-- Daily rebalancing with transaction cost modelling:
-  - 0 bps  
-  - 2 bps  
-  - 10 bps  
+The strategy is implemented across a diversified multi-asset universe spanning equities, bonds, commodities, and FX. Portfolio construction uses static cross-asset weights, with daily rebalancing for active strategies, while the buy-and-hold benchmark remains passively invested with no rebalancing, and regime classifications. Transaction costs are explicitly modelled under three scenarios (0 bps, 2 bps, and a conservative 10 bps), allowing for realistic evaluation of turnover sensitivity and net performance.
 
 ---
 
@@ -206,8 +170,7 @@ outputs/
 - Crisis heatmaps (returns and drawdowns)  
 - Volatility regime visualisations  
 - RV vs threshold diagnostics  
-
-All outputs are fully reproducible from a single pipeline run.
+- Visual summary figures used in README (equity curves, crisis heatmaps)
 
 ---
 
@@ -224,7 +187,7 @@ This will:
 - Run full backtest  
 - Generate all tables and figures  
 
-No terminal output — fully automated pipeline.
+No terminal output — fully automated pipeline designed for reproducible research workflows.
 
 ---
 
@@ -246,29 +209,40 @@ Most importantly:
 
 ## Key Takeaways
 
-- Momentum alone is fragile  
-- Volatility conditioning materially improves:
-  - Drawdowns  
-  - Crisis performance  
-  - Stability  
-- Contrarian overlays can outperform in extreme regimes  
-- Transaction costs are a critical constraint  
-- Results are statistically and economically meaningful  
+Momentum in its unconditional form is fragile, particularly during periods of elevated volatility and market stress. Conditioning on volatility materially improves performance by reducing drawdowns, enhancing crisis resilience, and stabilising return distributions. Contrarian overlays can provide additional benefits during extreme reversal regimes, although they remain sensitive to transaction costs. Overall, the results demonstrate that incorporating market state transforms momentum into a more robust and economically meaningful strategy, albeit with trading frictions acting as an important limiting factor.
 
----
 
-## Next Extensions
+## Research Origin & Extension
 
-- Dynamic volatility thresholds  
-- Regime-switching models (Markov / ML)  
-- Risk parity weighting  
-- Cross-sectional momentum integration  
-- Live trading implementation  
+This project builds on an initial single-asset research study conducted as part of an MSc in Finance, Investment & Risk, and extends it into a production-grade multi-asset research pipeline.
+
+The original work analysed a volatility-conditioned momentum strategy on the S&P 500, demonstrating that momentum payoffs are state-dependent and reverse in high-volatility environments.
+
+This repository extends that framework into a multi-asset setting, incorporating:
+
+- Cross-asset universes (equities, bonds, commodities, FX)
+- Portfolio construction and aggregation
+- Transaction cost modelling
+- Out-of-sample validation and statistical testing
+
+The extension addresses a key limitation of the original study — its single-asset scope — and evaluates whether the conditional structure generalises across markets.
+
+Full academic write-up:
+→ `docs/assignment_2.pdf`
+
+Concise research note:
+→ `docs/research_note.md`
 
 ---
 
 ## Author
 
-Sam Chung
-MSc Finance, Investment & Risk  
+Sam Chung | MSc Finance, Investment & Risk  
 Quantitative Finance | Systematic Strategies | Portfolio Construction
+
+---
+
+## Notes
+
+- All results are generated programmatically via the pipeline (no manual intervention)
+- Designed for extensibility into live trading or institutional research environments
