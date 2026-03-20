@@ -12,6 +12,10 @@ The core idea:
 
 > Momentum works — but its performance is highly state-dependent. Conditioning on volatility regimes materially improves outcomes.
 
+Economic intuition: Momentum breaks down in high-volatility regimes due to reversals and dislocations. Conditioning on volatility improves performance by reducing exposure during unstable periods and adapting behaviour (trend-following vs contrarian) across regimes.
+
+Based on prior literature on momentum crashes and volatility-managed strategies (Moskowitz et al., 2012; Barroso & Santa-Clara, 2015; Daniel & Moskowitz, 2016; Moreira & Muir, 2017).
+
 The system integrates:
 - Cross-asset momentum signals  
 - Volatility regime classification  
@@ -27,8 +31,8 @@ Four strategies are evaluated:
 
 - **Buy & Hold (BH)** — passive benchmark  
 - **TSMOM** — unconditional time-series momentum  
-- **VC_FLAT** — volatility-conditioned momentum (risk-reducing)  
-- **VC_CONTRARIAN** — volatility-conditioned contrarian overlay  
+- **VC_FLAT** — volatility-conditioned momentum where positions are set to 0 during high-volatility regimes  
+- **VC_CONTRARIAN** — volatility-conditioned strategy where positions are reversed (opposite of momentum signal) during high-volatility regimes  
 
 ---
 
@@ -49,9 +53,21 @@ Four strategies are evaluated:
 
 At low transaction cost levels (0–2 bps), the VC_CONTRARIAN strategy delivers the strongest terminal performance, clearly outperforming all other specifications. VC_FLAT and Buy & Hold track closely over much of the sample, although Buy & Hold ultimately benefits from the strong 2025 rally and finishes ahead. Under a more conservative 10 bps assumption, Buy & Hold becomes the dominant strategy, with VC_CONTRARIAN remaining competitive and VC_FLAT ranking third. In contrast, unconditional TSMOM shows persistently weak performance across all cost assumptions, with no clear evidence of sustained growth.
 
+### 1a. Portfolio Summary (Risk-Adjusted Performance)
+
+Volatility-conditioned strategies dominate on a risk-adjusted basis.
+
+**Sharpe ratios (net | 2 bps):**
+- VC_FLAT → 0.77
+- VC_CONTRARIAN → 0.58
+- Buy & Hold → 0.51
+- TSMOM → 0.15
+
+VC_FLAT delivers the highest Sharpe ratio via strong drawdown control and reduced exposure in high-volatility regimes. VC_CONTRARIAN achieves higher absolute returns but with increased turnover and slightly lower risk-adjusted efficiency. Buy & Hold remains cost-efficient but exhibits materially weaker risk-adjusted performance. TSMOM underperforms across both dimensions.
+
 ---
 
-### 2. Crisis Performance (High Signal)
+### 2. Crisis Performance
 
 #### Cumulative Returns
 
@@ -81,6 +97,8 @@ This confirms:
   - **Positive alpha vs Buy & Hold**
   - Meaningful deviation from pure beta exposure
 
+(Only VC_FLAT significant at the 1% level)
+
 This indicates:
 
 > Returns are not simply compensation for market risk.
@@ -96,12 +114,6 @@ This indicates:
 
 **Interpretation:**  
 The signal is **robust across time**, not just an in-sample artefact.
-
----
-
-## Economic Intuition
-
-Momentum performance deteriorates in high-volatility environments, particularly during reversal regimes and crisis-driven dislocations. In such states, previously persistent trends can break down rapidly, leading to sharp losses for unconditional momentum strategies. Volatility conditioning addresses this by dynamically adjusting exposure: reducing risk during unstable periods and switching behaviour between trend-following and contrarian positioning depending on the prevailing regime. This allows the strategy to avoid large drawdowns while maintaining participation in favourable market conditions.
 
 ---
 
